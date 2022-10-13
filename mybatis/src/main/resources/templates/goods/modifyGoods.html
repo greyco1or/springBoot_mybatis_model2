@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/default}">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block> 
+	
+	<th:block layout:fragment="customContents">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>상품코드</th>
+					<th>상품명</th>
+					<th>상품가격</th>
+					<th>판매자아이디</th>
+					<th>판매자이름</th>
+					<th>판매자이메일</th>
+					<th>상품등록일자</th>
+					<th th:if="${session.SID != null and session.SLEVEL != 3}" >수정</th>
+					<th th:if="${session.SID != null and session.SLEVEL != 3}" >삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${not #lists.isEmpty(goodsList)}" th:each="l : ${goodsList}">
+					<td th:text="${l.goodsCode}"></td>
+					<td th:text="${l.goodsName}"></td>
+					<td th:text="${l.goodsPrice}"></td>
+					<td th:text="${l.goodsSellerId}"></td>
+					<td th:text="${l.sellerInfo.memberName}"></td>
+					<td th:text="${l.sellerInfo.memberEmail}"></td>
+					<td th:text="${l.goodsRegDate}"></td>
+					<td th:if="${session.SID != null and session.SLEVEL != 3}">
+						<a href="#">수정</a>
+					</td>
+					<td th:if="${session.SID != null and session.SLEVEL != 3}">
+						<a href="#">삭제</a>
+					</td>
+				</tr>
+				<tr th:unless="${not #lists.isEmpty(goodsList)}">
+					<td colspan="8">등록된 상품이 없습니다.</td>
+				</tr>
+			</tbody>
+		</table> 
+	</th:block>
+	
+</html>

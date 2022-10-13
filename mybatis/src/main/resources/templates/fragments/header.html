@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<!-- 상단메뉴 -->
+	<div id="header" th:fragment="headerFragment">
+		header.html 의 headerFragment 조각<br>
+		header 메뉴<br>
+		<a th:href="@{/member/addMember}">01회원가입</a>
+		<a th:if="${session.SID != null and session.SLEVEL != 3}" th:href="@{/member/memberList}">02회원목록</a>
+		<a th:if="${session.SID != null and session.SLEVEL != 3}" th:href="@{/goods/addGoods}">03상품등록</a>
+		<a th:if="${session.SID != null}" th:href="@{/goods/goodsList}">04상품목록</a>
+		<a th:if="${session.SID == null}" th:href="@{/member/login}">05로그인</a>
+		<a th:if="${session.SID != null}" th:href="@{/member/logout}">06로그아웃</a>
+		<a th:if="${session.SID != null}" th:href="@{/goods/sellerList}">07판매자목록조회</a>
+		<br><br>
+		<div th:if="${session.SID != null}" style="text-align: right;">
+			<label>[[${session.SID + ' | ' + session.SNAME + '님 환영합니다.'}]]</label>
+		</div>
+	</div>
+</html>

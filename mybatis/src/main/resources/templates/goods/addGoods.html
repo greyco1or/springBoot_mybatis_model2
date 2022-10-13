@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/default}">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block> 
+	
+	<th:block layout:fragment="customCss">
+		<style>
+			input{
+				width: 98%;
+			}
+			select{
+				width: 
+			}
+		</style>
+	</th:block>
+	
+	<th:block layout:fragment="customTopJs">
+		
+	</th:block>
+	
+	<th:block layout:fragment="customContents">
+		<form id="addGoodsForm" th:action="@{/goods/addGoods}" method="post">	
+			<table border="1">
+				<tbody>
+					<tr>
+						<td>
+							<label for="goodsName">상품명</label>
+						</td>
+						<td colspan="2">
+							<input type="text" id="goodsName" name="goodsName" placeholder="상품명을 입력해주세요">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							판매자
+						</td>
+						<td colspan="2">
+							<select name="goodsSellerId" style="width: 100%;">
+								<!-- 디비연결 -->
+								<th:block th:unless="${#lists.isEmpty(sellerList)}" th:each="l : ${sellerList}">
+									<option th:value="${l.memberId}" th:text="${l.memberId + ' :::::: ' + l.memberName}"></option>
+								</th:block>
+								<th:block th:if="${#lists.isEmpty(sellerList)}">
+									<option value="">등록된 회원등급이 없습니다.</option>
+								</th:block>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="goodsPrice">상품가격</label>
+						</td>
+						<td>
+							<input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" id="goodsPrice" name="goodsPrice" placeholder="상품 가격을 입력해주세요">
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2">
+							<button type="button" id="regBtn" style="width: 100%;">상품등록</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+	</th:block>
+	
+</html>
